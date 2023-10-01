@@ -132,8 +132,8 @@ const PauseButton = () => {
 function App() {
   const MAX_ROUND = 4;
   const MAX_GOAL = 12;
-  const START_MINUTE = "25";
-  const START_SECOND = "00";
+  const START_MINUTE = 25;
+  const START_SECOND = 0;
 
   const [minutes, setMinutes] = useState(START_MINUTE);
   const [seconds, setSeconds] = useState(START_SECOND);
@@ -155,7 +155,7 @@ function App() {
         return;
       }
 
-      if (minutes === "00" && seconds === "01") {
+      if (minutes === 0 && seconds === 1) {
         clearTimer();
         if (round == MAX_ROUND && goal == MAX_GOAL) {
           resetRound();
@@ -168,11 +168,11 @@ function App() {
         } else {
           setRound((round) => round + 1);
         }
-      } else if (seconds === "00") {
-        setMinutes((prev) => (parseInt(prev) - 1).toString().padStart(2, "0"));
-        setSeconds("59");
+      } else if (seconds === 0) {
+        setMinutes((prev) => prev - 1);
+        setSeconds(59);
       } else {
-        setSeconds((prev) => (parseInt(prev) - 1).toString().padStart(2, "0"));
+        setSeconds((prev) => prev - 1);
       }
     }, 1000);
     return () => clearInterval(timer);
@@ -188,7 +188,7 @@ function App() {
           initial="start"
           animate="end"
         >
-          {minutes}
+          {minutes.toString().padStart(2, "0")}
         </Box>
         <TransparentText>:</TransparentText>
         <Box
@@ -197,7 +197,7 @@ function App() {
           initial="start"
           animate="end"
         >
-          {seconds}
+          {seconds.toString().padStart(2, "0")}
         </Box>
       </Timer>
       <Button
